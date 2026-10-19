@@ -1,7 +1,7 @@
 import streamlit as st
 
 ## The logic for the calculation is stored in functions in mylibrary.py 
-import mylibrary 
+
 
 ## User Interface ---------------------------------------------------------------------
 ## This file shows you streamlit code for three parts.
@@ -77,10 +77,17 @@ def reset_choices():
 ## 4) display the outcome in a streamlit table using a python dictionary 
 ## 5) How do you declare a button to execute a function when clicked
 ## ------------------------------------------------------------------------------------ 
-
+def get_recommendations(attractions_list, choices): #edited
+    out = []
+    for choice in choices:
+        for cat in attractions_list:
+            if choice in cat["category"]:
+                out.append(cat)
+    return out
+        
 if st.button("Get me recommendations"):
     options = list( st.session_state.user_selection )  
-    recs = mylibrary.get_recommendations(ATTRACTIONS, options)
+    recs = get_recommendations(ATTRACTIONS, options)
     st.table(recs)
 
 st.button("Reset Selections", on_click=reset_choices)
